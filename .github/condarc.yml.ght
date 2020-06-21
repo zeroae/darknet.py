@@ -1,0 +1,6 @@
+anaconda_upload: false
+channels:
+  - zeroae
+  - defaults
+  - conda-forge
+show_channel_urls: true
