@@ -3,7 +3,7 @@
 {% set rosetta = data["conda_rosetta_stone"] %}
 
 package:
-  name: darknet.c
+  name: darknet.py
   
   version: {{ data['version'] }}
 
@@ -62,7 +62,7 @@ test:
     - pytest tests
 
 about:
-  home: https://github.com/zeroae/darknet.c
-  summary: DarkNet OpenSource Neural Networks in C
+  home: https://github.com/zeroae/darknet.py
+  summary: DarkNet OpenSource Neural Networks in Python
   license: {{ data.get('license') }}
   license_file: LICENSE

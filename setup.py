@@ -51,7 +51,7 @@ conda_rosetta_stone = {
 setup_kwargs = dict(
     author="Patrick Sodré",
     author_email="psodre@gmail.com",
-    use_scm_version={"write_to": "src/darknet/c/_version.py"},
+    use_scm_version={"write_to": "src/darknet/py/_version.py"},
     python_requires=">=3.6",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
@@ -63,11 +63,11 @@ setup_kwargs = dict(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
-    description="DarkNet OpenSource Neural Networks in C",
+    description="DarkNet OpenSource Neural Networks in Python",
     # fmt: off
     entry_points={
         "darknet.cli": [
-            "c=darknet.c.cli:c",
+            "py=darknet.py.cli:py",
         ],
     },
     # fmt: on
@@ -76,8 +76,8 @@ setup_kwargs = dict(
     long_description=readme,
     long_description_content_type="text/x-rst",
     include_package_data=True,
-    keywords="c darknet",
-    name="darknet-c",
+    keywords="py darknet",
+    name="darknet-py",
     package_dir={"": "src"},
     packages=find_namespace_packages(where="./src"),
     setup_requires=setup_requirements,
@@ -89,7 +89,7 @@ setup_kwargs = dict(
         "doc": doc_requirements
         # fmt: on
     },
-    url="https://github.com/zeroae/darknet.c",
+    url="https://github.com/zeroae/darknet.py",
     zip_safe=False,
 )
 
@@ -101,7 +101,7 @@ if "CONDA_BUILD_STATE" in os.environ:
         del setup_kwargs["use_scm_version"]
     except ModuleNotFoundError:
         print(
-            "Error: darknet.c requires that setuptools_scm be installed with conda-build!"  # noqa: E501
+            "Error: darknet.py requires that setuptools_scm be installed with conda-build!"  # noqa: E501
         )
         raise
     setup_kwargs["conda_rosetta_stone"] = conda_rosetta_stone

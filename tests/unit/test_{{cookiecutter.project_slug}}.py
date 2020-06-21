@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-"""Tests for `darknet.c` package."""
+"""Tests for `darknet.py` package."""
 
 import pytest
 from click.testing import CliRunner
-from darknet.c import cli
+from darknet.py import cli
 
 
 @pytest.fixture
@@ -26,9 +26,9 @@ def test_content(response):
 def test_command_line_interface():
     """Test the CLI."""
     runner = CliRunner()
-    result = runner.invoke(cli.c)
+    result = runner.invoke(cli.py)
     assert result.exit_code == 0
     assert "Replace this message" in result.output
-    help_result = runner.invoke(cli.c, ["--help"])
+    help_result = runner.invoke(cli.py, ["--help"])
     assert help_result.exit_code == 0
     assert "--help  Show this message and exit." in help_result.output
