@@ -1,0 +1,8 @@
+---
+exclude_paths:
+  - '.github/**'
+  - 'src/darknet/c/_version.py'
+  - 'tests/**/*'
+  - 'tests/*'
+  - 'benchmarks/**/*'
+  - 'setup.py'
