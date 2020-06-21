@@ -28,8 +28,8 @@ cookiecutter:
   # These were guess based on the repository information
   # You probably want to customize them.
   project_namespace: darknet
-  project_slug: c
-  project_name: DarkNet OpenSource Neural Networks in C
+  project_slug: py
+  project_name: DarkNet OpenSource Neural Networks in Python
 
   #
   # These are likely correct...
@@ -48,5 +48,5 @@ cookiecutter:
   email: psodre@gmail.com
   github_username: sodre
   github_organization: zeroae
-  project_repo: darknet.c
-  project_short_description: DarkNet OpenSource Neural Networks in C
+  project_repo: darknet.py
+  project_short_description: DarkNet OpenSource Neural Networks in Python

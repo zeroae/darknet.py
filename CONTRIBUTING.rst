@@ -15,7 +15,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/zeroae/darknet.c/issues.
+Report bugs at https://github.com/zeroae/darknet.py/issues.
 
 If you are reporting a bug, please include:
 
@@ -38,14 +38,14 @@ and "help wanted" is open to whoever wants to implement it.
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-DarkNet OpenSource Neural Networks in C could always use more documentation, whether as part of the
-official DarkNet OpenSource Neural Networks in C docs, in docstrings, or even on the web in blog posts,
+DarkNet OpenSource Neural Networks in Python could always use more documentation, whether as part of the
+official DarkNet OpenSource Neural Networks in Python docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/zeroae/darknet.c/issues.
+The best way to send feedback is to file an issue at https://github.com/zeroae/darknet.py/issues.
 
 If you are proposing a feature:
 
@@ -57,18 +57,18 @@ If you are proposing a feature:
 Get Started!
 ------------
 
-Ready to contribute? Here's how to set up `darknet.c` for local development.
+Ready to contribute? Here's how to set up `darknet.py` for local development.
 
-1. Fork the `darknet.c` repo on GitHub.
+1. Fork the `darknet.py` repo on GitHub.
 2. Clone your fork locally::
 
-    $ git clone git@github.com:your_name_here/darknet.c.git
+    $ git clone git@github.com:your_name_here/darknet.py.git
 
 3. Install your local copy into a conda environment. Assuming you have conda installed, this is how you set up your fork for local development::
 
-    $ cd darknet.c/
+    $ cd darknet.py/
     $ make init
-    $ conda activate darknet.c-dev
+    $ conda activate darknet.py-dev
 
 4. Create a branch for local development, use the ``f-``, ``i-`` or ``chore-`` prefixes to auto-label your PR::
 
@@ -107,7 +107,7 @@ Tips
 
 To run a subset of tests::
 
-    $ pytest tests.test_c
+    $ pytest tests.test_py
 
 Deploying
 ---------

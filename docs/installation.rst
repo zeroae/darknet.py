@@ -8,13 +8,13 @@ Installation
 Stable release
 --------------
 
-To install DarkNet OpenSource Neural Networks in C, run this command in your terminal:
+To install DarkNet OpenSource Neural Networks in Python, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install darknet.c
+    $ pip install darknet.py
 
-This is the preferred method to install DarkNet OpenSource Neural Networks in C, as it will always install the most recent stable release.
+This is the preferred method to install DarkNet OpenSource Neural Networks in Python, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -26,19 +26,19 @@ you through the process.
 From sources
 ------------
 
-The sources for DarkNet OpenSource Neural Networks in C can be downloaded from the `Github repo`_.
+The sources for DarkNet OpenSource Neural Networks in Python can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/sodre/darknet.c
+    $ git clone git://github.com/sodre/darknet.py
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/sodre/darknet.c/tarball/master
+    $ curl -OJL https://github.com/sodre/darknet.py/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/zeroae/darknet.c
-.. _tarball: https://github.com/zeroae/darknet.c/tarball/master
+.. _Github repo: https://github.com/zeroae/darknet.py
+.. _tarball: https://github.com/zeroae/darknet.py/tarball/master
