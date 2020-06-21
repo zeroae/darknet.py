@@ -1,0 +1,52 @@
+---
+codecov:
+  #
+  # TODO: Place your codecov.io *BADGE* token here for private repositories
+  badge_token: CODECOV_BADGE_TOKEN
+
+codacy:
+  #
+  # TODO: Place your CODACY Project Id here.
+  #       This is used for displaying your badge in public and private repos
+  project_id: CODACY_BADGE_TOKEN
+
+ght:
+  command_line_interface:
+    - (*) Click
+    - ( ) None
+
+  license:
+    - (*) MIT
+    - ( ) BSD
+    - ( ) ISC
+    - ( ) Apache
+    - ( ) GNUv3
+    - ( ) Proprietary
+
+cookiecutter:
+  #
+  # These were guess based on the repository information
+  # You probably want to customize them.
+  project_namespace: darknet
+  project_slug: c
+  project_name: DarkNet OpenSource Neural Networks in C
+
+  #
+  # These are likely correct...
+  anaconda_organization: zeroae
+
+  #
+  # These should not be changed at the moment...
+  noarch_python: y
+  use_pytest: y
+  add_pyup_badge: y
+  version: 0.0.0
+
+  #
+  # These should probably be left alone. They came from github
+  full_name: Patrick Sodré
+  email: psodre@gmail.com
+  github_username: sodre
+  github_organization: zeroae
+  project_repo: darknet.c
+  project_short_description: DarkNet OpenSource Neural Networks in C
