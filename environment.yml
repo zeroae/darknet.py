@@ -11,6 +11,9 @@ dependencies:
     - -e .
 
   # Setup Requirements (setup.py:setup_requirements)
+  - compilers
+  - cython
+  - numpy
   - setuptools_scm
   - setuptools_scm_git_archive
   - wheel
@@ -18,7 +21,9 @@ dependencies:
   # Install Requirements (setup.py:requirements)
   - click >=7.0
   - click-plugins
+  - darknet
   - entrypoints
+  - pillow
 
   # Test Requirements (setup.py:test_requirements)
   - pytest >=3
@@ -31,6 +36,7 @@ dependencies:
 
   # Dev Workflow requirements
   - pre-commit
+  - jupyter
   - black
   - flake8
   - keyring

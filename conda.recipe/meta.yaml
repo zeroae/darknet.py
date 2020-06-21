@@ -4,7 +4,7 @@
 
 package:
   name: darknet.py
-  
+
   version: {{ data['version'] }}
 
 source:
@@ -28,8 +28,8 @@ build:
 requirements:
   # if you need compilers, uncomment these
   #    read more at https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html
-  # build:
-  #   - {{ compilers('c') }}
+  build:
+    - {{ compilers('c') }}
   host:
     - python {{ data['python_requires'] }}
     - pip

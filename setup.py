@@ -2,8 +2,10 @@
 
 """The setup script."""
 
-from setuptools import setup, find_namespace_packages
+from setuptools import setup, find_namespace_packages, Extension
+from Cython.Build import cythonize
 import os
+import numpy
 
 with open("README.rst") as readme_file:
     readme = readme_file.read()
@@ -19,6 +21,8 @@ requirements = [
 
 setup_requirements = [
     # fmt: off
+    "cython",
+    "numpy",
     "setuptools_scm",
     "setuptools_scm_git_archive",
     "wheel",
@@ -41,12 +45,17 @@ doc_requirements = [
     # fmt: on
 ]
 
-
 conda_rosetta_stone = {
     # fmt: off
     "pypa-requirement": "conda-dependency"
     # fmt: on
 }
+
+ext_modules = cythonize([
+    Extension("darknet.py.network", ["src/darknet/py/network.pyx"],
+              include_dirs=[numpy.get_include()],
+              libraries=["darknet"])
+])
 
 setup_kwargs = dict(
     author="Patrick Sodré",
@@ -71,6 +80,7 @@ setup_kwargs = dict(
         ],
     },
     # fmt: on
+    ext_modules=ext_modules,
     install_requires=requirements,
     license="MIT",
     long_description=readme,
