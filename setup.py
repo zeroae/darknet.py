@@ -3,9 +3,7 @@
 """The setup script."""
 
 from setuptools import setup, find_namespace_packages, Extension
-from Cython.Build import cythonize
 import os
-import numpy
 
 with open("README.rst") as readme_file:
     readme = readme_file.read()
@@ -16,6 +14,8 @@ requirements = [
     "click>=7.0",
     "click-plugins",
     "entrypoints",
+    "numpy",
+    "pillow",
     # fmt: on
 ]
 
@@ -45,17 +45,36 @@ doc_requirements = [
     # fmt: on
 ]
 
+conda_requires = {
+    # fmt: off
+    "build": [
+    ],
+    "host": [
+        "darknet-cpu >=0.0.20200614"
+    ],
+    "run": [
+        "darknet >=0.0.20200614"
+    ]
+    # fmt: on
+}
+
 conda_rosetta_stone = {
     # fmt: off
     "pypa-requirement": "conda-dependency"
     # fmt: on
 }
 
-ext_modules = cythonize([
-    Extension("darknet.py.network", ["src/darknet/py/network.pyx"],
-              include_dirs=[numpy.get_include()],
-              libraries=["darknet"])
-])
+ext_modules = []
+try:
+    from Cython.Build import cythonize
+    import numpy as np
+    ext_modules = cythonize([
+        Extension("darknet.py.network", ["src/darknet/py/network.pyx"],
+                  include_dirs=[np.get_include()],
+                  libraries=["darknet"])
+    ])
+except ModuleNotFoundError:
+    pass
 
 setup_kwargs = dict(
     author="Patrick Sodré",
@@ -96,7 +115,7 @@ setup_kwargs = dict(
     extras_require={
         # fmt: off
         "test": test_requirements,
-        "doc": doc_requirements
+        "doc": doc_requirements,
         # fmt: on
     },
     url="https://github.com/zeroae/darknet.py",
@@ -115,5 +134,6 @@ if "CONDA_BUILD_STATE" in os.environ:
         )
         raise
     setup_kwargs["conda_rosetta_stone"] = conda_rosetta_stone
+    setup_kwargs["conda_requires"] = conda_requires
 
 setup(**setup_kwargs)
