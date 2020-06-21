@@ -1,19 +1,19 @@
-"""Console script for darknet.c."""
+"""Console script for darknet.py."""
 
 import sys
 import click
 
 
 @click.command()
-def c(args=None):
-    """Console script for darknet.c."""
+def py(args=None):
+    """Console script for darknet.py."""
     # fmt: off
     click.echo("Replace this message by putting your code into "
-               "c.cli.main")
+               "py.cli.main")
     click.echo("See click documentation at https://click.palletsprojects.com/")
     # fmt: on
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(c)  # pragma: no cover
+    sys.exit(py)  # pragma: no cover

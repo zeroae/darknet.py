@@ -1,7 +1,7 @@
 [run]
 branch = true
 source =
-    darknet.c
+    darknet.py
 
 [paths]
 source =
@@ -11,6 +11,6 @@ source =
 [report]
 omit =
     setup.py
-    src/darknet/c/__main__.py
-    src/darknet/c/_version.py
+    src/darknet/py/__main__.py
+    src/darknet/py/_version.py
     tests/*

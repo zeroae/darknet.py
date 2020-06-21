@@ -1,5 +1,5 @@
 ### Environment Information
-* DarkNet OpenSource Neural Networks in C version:
+* DarkNet OpenSource Neural Networks in Python version:
 * Python version:
 * Operating System:
 

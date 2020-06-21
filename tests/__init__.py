@@ -1,1 +1,1 @@
-"""Unit test package for darknet.c."""
+"""Unit test package for darknet.py."""

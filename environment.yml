@@ -1,5 +1,5 @@
 
-name: darknet.c-dev
+name: darknet.py-dev
 channels:
   - zeroae
   - conda-forge

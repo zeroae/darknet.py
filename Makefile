@@ -28,7 +28,7 @@ help:
 
 init: ## Initializes the development environment
 	conda env update . || conda env create .
-	conda run -n darknet.c-dev pre-commit install
+	conda run -n darknet.py-dev pre-commit install
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
@@ -89,7 +89,7 @@ dist: clean ## builds source and wheel package
 
 .PHONY: wheels
 wheels: dist  ## downloads wheel dependencies
-	pip download -f dist -d wheels darknet-c
+	pip download -f dist -d wheels darknet-py
 	ls -l wheels
 
 dist-conda:  ## builds conda-package

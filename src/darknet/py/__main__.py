@@ -1,3 +1,3 @@
 from . import cli
 
-cli.c()
+cli.py()

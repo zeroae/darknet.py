@@ -1,4 +1,4 @@
-Welcome to DarkNet OpenSource Neural Networks in C's documentation!
+Welcome to DarkNet OpenSource Neural Networks in Python's documentation!
 ======================================
 
 .. toctree::
