@@ -14,6 +14,7 @@ requirements = [
     "click>=7.0",
     "click-plugins",
     "entrypoints",
+    "intake",
     "numpy",
     "pillow",
     # fmt: on
@@ -97,6 +98,12 @@ setup_kwargs = dict(
         "darknet.cli": [
             "py=darknet.py.cli:py",
         ],
+        "intake.drivers": [
+            "darknet = darknet.py.intake:DarknetSource"
+        ],
+        "intake.catalogs": [
+            "darknet = darknet.zoo:cat"
+        ]
     },
     # fmt: on
     ext_modules=ext_modules,

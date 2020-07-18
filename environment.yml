@@ -23,6 +23,9 @@ dependencies:
   - click-plugins
   - darknet
   - entrypoints
+  - fsspec
+  - intake
+  - numpy
   - pillow
 
   # Test Requirements (setup.py:test_requirements)
