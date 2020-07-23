@@ -1,5 +1,6 @@
 import numpy as np
 from PIL import Image
+from PIL import ImageDraw
 
 
 def image_to_3darray(image, target_shape):
@@ -29,3 +30,23 @@ def image_scale_and_pad(image: Image.Image, target_shape) -> Image.Image:
         image.thumbnail(target_shape)
         image = ImageOps.pad(image, target_shape)
     return image
+
+
+def image_draw_detections(img: Image.Image, detections) -> Image.Image:
+    img = img.copy()
+    draw = ImageDraw.Draw(img)
+    colors = ["purple", "blue", "green", "pink", "brown"]
+
+    def xywh_to_bounds(x, y, w, h):
+        return x-w/2, y-h/2, x+w/2, y+h/2
+
+    for i, (cat, prob, xywh) in enumerate(detections):
+        text = f"{cat}@{prob:.2%}"
+        bounds = xywh_to_bounds(*xywh)
+        t_w, t_h = draw.textsize(text)
+        draw.rectangle(xywh_to_bounds(*xywh), outline=colors[i%5], width=4)
+        draw.rectangle((bounds[0], bounds[1]-t_h, bounds[0]+t_w+4, bounds[1]), fill=colors[i%5])
+        draw.text((bounds[0]+2,bounds[1]-t_h), text, fill="white")
+    return img
+
+
