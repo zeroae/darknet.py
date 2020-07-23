@@ -6,6 +6,7 @@ cimport numpy as np
 cimport libdarknet as dn
 
 from libc.stdlib cimport free
+from .util import fsspec_cache_open
 
 np.import_array()
 
@@ -23,6 +24,13 @@ cdef class Metadata:
 
 cdef class Network:
     cdef dn.network* _c_network
+
+    @staticmethod
+    def open(config_url, weights_url):
+        with fsspec_cache_open(config_url, mode="rt") as config:
+            with fsspec_cache_open(weights_url, mode="rb") as weights:
+                return Network(config.name, weights.name)
+
 
     def __cinit__(self, config_file, weights_file):
         clear = 1
@@ -96,7 +104,7 @@ cdef class Network:
             elif nms_type == "sort":
                 dn.do_nms_sort(detections, num_dets, detections[0].classes, nms_threshold)
             else:
-                raise ValueError(f"non-maximum-supression type {nms_type} is not one of {['obj', 'sort']}")
+                raise ValueError(f"non-maximum-suppression type {nms_type} is not one of {['obj', 'sort']}")
 
         rv = [
             (j, detections[i].prob[j],

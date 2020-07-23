@@ -8,8 +8,8 @@ class ImageDetector(object):
 
     _last_image_size = None
 
-    def __init__(self, labels, config_file, weights_file, **kwargs):
-        self.network = Network(config_file, weights_file, **kwargs)
+    def __init__(self, labels, config_url, weights_url, **kwargs):
+        self.network = Network.open(config_url, weights_url, **kwargs)
         self.labels = labels
 
     def detect(self, image, **kwargs):

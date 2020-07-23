@@ -1,8 +1,55 @@
+import os
+import fsspec
+
 import numpy as np
 from PIL import Image
 from PIL import ImageDraw
 
-import fsspec
+
+def fsspec_cache_open(urlpath: str,
+                      mode="rb",
+                      compression=None,
+                      encoding="utf8",
+                      errors=None,
+                      protocol=None,
+                      newline=None,
+                      **kwargs) -> fsspec.core.OpenFile:
+    chain = urlpath.split("::")
+
+    if chain[0].startswith("github"):
+        chain[0], kwargs = fsspec_split_github_url(chain[0], kwargs)
+
+    # Because darknet is written in C, we need real file names for it to open
+    if chain[0] not in {"filecache", "simplecache"}:
+        first_scheme = chain[0].split("://")[0]
+        urlpath = f"filecache::{urlpath}"
+        filecache = dict(cache_storage=f"{os.environ['HOME']}/.cache/darknet.py")
+        kwargs = {
+            "filecache": filecache,
+            first_scheme: kwargs
+        }
+
+    return fsspec.open(urlpath, mode, compression, encoding, errors, protocol, newline, **kwargs)
+
+
+def fsspec_split_github_url(github_url: str, kwargs: dict) -> (str, dict):
+    # TODO: Remove this once fsspec > 0.7.5
+    from urllib.parse import urlparse
+
+    rv = github_url
+    github_url = urlparse(github_url)
+    keys = {"org", "repo", "sha"}
+    # If that metadata is not passed as kwargs, we need to extract it
+    # netloc = "{org}:{repo}@{sha}"
+    kwargs = kwargs or dict()
+    if (keys & kwargs.keys()) != keys:
+        org, repo, sha = github_url.username, github_url.password, github_url.hostname
+        if org is None or repo is None or sha is None:
+            raise ValueError(f"The github url {github_url} does not match `github://<org>:<repo>@<sha>/path`")
+        kwargs.update(dict(org=org, repo=repo, sha=sha))
+        rv = github_url.geturl().replace(f"{github_url.netloc}/", "")
+
+    return rv, kwargs
 
 
 def image_to_3darray(image, target_shape):

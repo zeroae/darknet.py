@@ -35,6 +35,7 @@ test_requirements = [
     # fmt: off
     "pytest>=3",
     "pytest-cov",
+    "pytest-mock",
     # fmt: on
 ]
 
