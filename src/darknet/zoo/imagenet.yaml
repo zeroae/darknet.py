@@ -1,0 +1,88 @@
+metadata:
+  version: 1
+sources:
+  #
+  # Labels
+  labels:
+    description: ImageNet Labels
+    driver: textfiles
+    args:
+      urlpath: "filecache::github://data/imagenet.shortnames.list"
+      storage_options: &storage_options
+        filecache:
+          cache_storage: "{{ env('HOME') }}/.cache/darknet.py"
+        github:
+          org: pjreddie
+          repo: darknet
+          sha: master
+
+  #
+  # AlexNet
+  alexnet:
+    description: AlexNet
+    driver: darknet
+    args:
+      names: "filecache::github://data/imagenet.shortnames.list"
+      names_slice: 1000
+      net_config: "filecache::github://cfg/alexnet.cfg"
+      net_weights: "filecache::https://pjreddie.com/media/files/alexnet.weights"
+      storage_options: *storage_options
+
+  #
+  # Darknet Reference Model
+  darknet:
+    description: Darknet
+    driver: darknet
+    args:
+      names: "filecache::github://data/imagenet.shortnames.list"
+      names_slice: 1000
+      net_config: "filecache::github://cfg/darknet.cfg"
+      net_weights: "filecache::https://pjreddie.com/media/files/darknet.weights"
+      storage_options: *storage_options
+
+  # Darknet 19
+  darknet19:
+    description: Darknet 19 Model
+    driver: darknet
+    args:
+      names: "filecache::github://data/imagenet.shortnames.list"
+      names_slice: 1000
+      net_config: "filecache::github://cfg/darknet19.cfg"
+      net_weights: "filecache::https://pjreddie.com/media/files/darknet19.weights"
+      storage_options: *storage_options
+
+  #
+  # Darknet 19 448x448 images
+  darknet19_448:
+    description: Darknet 19 Model for 448x448 images
+    driver: darknet
+    args:
+      names: "filecache::github://data/imagenet.shortnames.list"
+      names_slice: 1000
+      net_config: "filecache::github://cfg/darknet19_448.cfg"
+      net_weights: "filecache::https://pjreddie.com/media/files/darknet19_448.weights"
+      storage_options: *storage_options
+
+  #
+  # Darknet 53
+  darknet53:
+    description: Darknet 53 Model
+    driver: darknet
+    args:
+      names: "filecache::github://data/imagenet.shortnames.list"
+      names_slice: 1000
+      net_config: "filecache::github://cfg/darknet53.cfg"
+      net_weights: "filecache::https://pjreddie.com/media/files/darknet53.weights"
+      storage_options: *storage_options
+
+  #
+  # Darknet 53 448x448
+  darknet53_448:
+    description: Darknet 53 Model for 448x448 images
+    driver: darknet
+    args:
+      names: "filecache::github://data/imagenet.shortnames.list"
+      names_slice: 1000
+      net_config: "filecache::github://cfg/darknet53_448.cfg"
+      net_weights: "filecache::https://pjreddie.com/media/files/darknet53_448.weights"
+      storage_options: *storage_options

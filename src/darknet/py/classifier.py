@@ -10,8 +10,8 @@ class ClassifierBase(ABC):
     network: Network
     labels: list
 
-    def __init__(self, labels, config_file, weights_file, **kwargs):
-        self.network = Network(config_file, weights_file, **kwargs)
+    def __init__(self, labels, config_url, weights_url, **kwargs):
+        self.network = Network.open(config_url, weights_url, **kwargs)
 
         self.labels = range(self.network.output_size()) if labels is None else labels
         if len(self.labels) != self.network.output_size():

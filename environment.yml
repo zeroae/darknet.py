@@ -23,11 +23,15 @@ dependencies:
   - click-plugins
   - darknet
   - entrypoints
+  - fsspec
+  - intake
+  - numpy
   - pillow
 
   # Test Requirements (setup.py:test_requirements)
   - pytest >=3
   - pytest-cov
+  - pytest-mock
 
   # Documentation Requirements (setup.py:doc_requirements)
   - sphinx
