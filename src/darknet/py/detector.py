@@ -1,4 +1,4 @@
-from . import Network
+from .network import Network
 from .util import image_to_3darray
 
 
