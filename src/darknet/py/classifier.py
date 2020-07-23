@@ -15,8 +15,10 @@ class ClassifierBase(ABC):
 
         self.labels = range(self.network.output_size()) if labels is None else labels
         if len(self.labels) != self.network.output_size():
-            raise TypeError("Number of labels does not match size of network output. "
-                            f"{len(self.labels)} != {self.network.output_size()}")
+            raise TypeError(
+                "Number of labels does not match size of network output. "
+                f"{len(self.labels)} != {self.network.output_size()}"
+            )
 
     @abstractmethod
     def classify(self, input_obj, top: int = -1):

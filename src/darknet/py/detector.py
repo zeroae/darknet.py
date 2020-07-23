@@ -24,9 +24,8 @@ class ImageDetector(object):
         if "frame_size" not in kwargs:
             kwargs["frame_size"] = self._last_image_size
         detections = self.network.detect(**kwargs)
-        return detections if self.labels is None else [
-            (self.labels[label_idx], prob, bbox)
-            for label_idx, prob, bbox in detections
-        ]
-
-
+        return (
+            detections
+            if self.labels is None
+            else [(self.labels[label_idx], prob, bbox) for label_idx, prob, bbox in detections]
+        )

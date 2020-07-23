@@ -1,6 +1,7 @@
 import fsspec
 import darknet.py.util as darknet_util
 
+
 def test_fsspec_split_github_url():
     url, kwargs = darknet_util.fsspec_split_github_url("github://org:repo@sha/path/to/file", None)
     assert url == "github://path/to/file"
