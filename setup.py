@@ -14,6 +14,7 @@ requirements = [
     "click>=7.0",
     "click-plugins",
     "entrypoints",
+    "fsspec",
     "intake",
     "numpy",
     "pillow",

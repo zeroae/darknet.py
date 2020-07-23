@@ -2,16 +2,22 @@ import numpy as np
 from PIL import Image
 from PIL import ImageDraw
 
+import fsspec
+
 
 def image_to_3darray(image, target_shape):
     # We assume the original size matches the target_shape (height, width)
     orig_size = target_shape
+
     if isinstance(image, str):
-        image = Image.open(image)
+        with fsspec.open(image, mode="rb") as f:
+            image = Image.open(f)
+
     if isinstance(image, Image.Image):
         orig_size = image.size
         image = image_scale_and_pad(image, target_shape)
         image = np.asarray(image)
+
     if isinstance(image, np.ndarray):
         if image.shape[0:2] != target_shape:
             image = Image.fromarray(image)
