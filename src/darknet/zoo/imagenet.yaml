@@ -2,6 +2,21 @@ metadata:
   version: 1
 sources:
   #
+  # Labels
+  labels:
+    description: ImageNet Labels
+    driver: textfiles
+    args:
+      urlpath: "filecache::github://data/imagenet.shortnames.list"
+      storage_options: &storage_options
+        filecache:
+          cache_storage: "{{ env('HOME') }}/.cache/darknet.py"
+        github:
+          org: pjreddie
+          repo: darknet
+          sha: master
+
+  #
   # AlexNet
   alexnet:
     description: AlexNet
@@ -11,13 +26,7 @@ sources:
       names_slice: 1000
       net_config: "filecache::github://cfg/alexnet.cfg"
       net_weights: "filecache::https://pjreddie.com/media/files/alexnet.weights"
-      storage_options: &storage_options
-        filecache:
-          cache_storage: "{{ env('HOME') }}/.cache/darknet.py"
-        github:
-          org: pjreddie
-          repo: darknet
-          sha: master
+      storage_options: *storage_options
 
   #
   # Darknet Reference Model
