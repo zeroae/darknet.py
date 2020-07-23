@@ -55,6 +55,9 @@ test:
     - tests
   requires:
     # dependencies are defined in setup.py
+    {% for dep in data['conda_requires']['test'] %}
+    - {{ rosetta.get(dep, dep).lower() }}
+    {% endfor %}
     {% for dep in data['tests_require'] %}
     - {{ rosetta.get(dep, dep).lower() }}
     {% endfor %}

@@ -57,7 +57,10 @@ conda_requires = {
     ],
     "run": [
         "darknet >=0.0.20200614"
-    ]
+    ],
+    "test": [
+        "darknet-cpu >=0.0.20200614"
+    ],
     # fmt: on
 }
 
