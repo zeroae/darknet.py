@@ -71,11 +71,17 @@ ext_modules = []
 try:
     from Cython.Build import cythonize
     import numpy as np
-    ext_modules = cythonize([
-        Extension("darknet.py.network", ["src/darknet/py/network.pyx"],
-                  include_dirs=[np.get_include()],
-                  libraries=["darknet"])
-    ])
+
+    ext_modules = cythonize(
+        [
+            Extension(
+                "darknet.py.network",
+                ["src/darknet/py/network.pyx"],
+                include_dirs=[np.get_include()],
+                libraries=["darknet"],
+            )
+        ]
+    )
 except ModuleNotFoundError:
     pass
 
