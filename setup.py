@@ -15,7 +15,6 @@ requirements = [
     "click-plugins",
     "entrypoints",
     "fsspec",
-    "intake",
     "numpy",
     "pillow",
     # fmt: on
@@ -60,6 +59,7 @@ conda_requires = {
     ],
     "test": [
         "darknet-cpu >=0.0.20200614"
+        "intake"
     ],
     # fmt: on
 }
@@ -134,6 +134,9 @@ setup_kwargs = dict(
         # fmt: off
         "test": test_requirements,
         "doc": doc_requirements,
+        "zoo": [
+            "intake"
+        ]
         # fmt: on
     },
     url="https://github.com/zeroae/darknet.py",
