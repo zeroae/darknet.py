@@ -47,6 +47,12 @@ doc_requirements = [
     # fmt: on
 ]
 
+zoo_requirements = [
+    # fmt: off
+    "intake",
+    # fmt: on
+]
+
 conda_requires = {
     # fmt: off
     "build": [
@@ -134,9 +140,7 @@ setup_kwargs = dict(
         # fmt: off
         "test": test_requirements,
         "doc": doc_requirements,
-        "zoo": [
-            "intake"
-        ]
+        "zoo": zoo_requirements,
         # fmt: on
     },
     url="https://github.com/zeroae/darknet.py",
