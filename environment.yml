@@ -24,9 +24,11 @@ dependencies:
   - darknet
   - entrypoints
   - fsspec
-  - intake
   - numpy
   - pillow
+
+  # Zoo Optional Requirements
+  - intake
 
   # Test Requirements (setup.py:test_requirements)
   - pytest >=3
