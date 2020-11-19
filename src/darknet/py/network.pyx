@@ -32,9 +32,11 @@ cdef class Network:
                 return Network(config.name, weights.name)
 
 
-    def __cinit__(self, config_file, weights_file):
-        clear = 1
-        self._c_network = dn.load_network(config_file.encode(), weights_file.encode(), clear)
+    def __cinit__(self, config_file, weights_file, clear = True, batch_size = 1):
+        self._c_network = dn.load_network_custom(config_file.encode(),
+                                                 weights_file.encode(),
+                                                 1 if clear else 0,
+                                                 batch_size)
         if self._c_network is NULL:
             raise RuntimeError("Failed to create the DarkNet Network...")
 

@@ -59,6 +59,7 @@ cdef extern from "darknet.h":
         pass
 
     network* load_network(char* cfg_filename, char* weights_filename, int clear)
+    network* load_network_custom(char* cfg_filename, char* weights_filename, int clear, int batch_size)
     void free_network(network self)
 
     int network_width(network *self);
