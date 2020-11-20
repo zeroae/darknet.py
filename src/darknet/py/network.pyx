@@ -73,6 +73,14 @@ cdef class Network:
         return dn.network_width(self._c_network), dn.network_height(self._c_network)
 
     @property
+    def width(self):
+        return dn.network_width(self._c_network)
+
+    @property
+    def height(self):
+        return dn.network_height(self._c_network)
+
+    @property
     def depth(self):
         return dn.network_depth(self._c_network)
 
