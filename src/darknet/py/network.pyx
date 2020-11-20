@@ -10,7 +10,7 @@ from .util import fsspec_cache_open
 
 np.import_array()
 
-cdef convert_detections_to_tuples(dn.detection* detections, int num_dets, float nms_threshold, str nms_type):
+cdef convert_detections_to_tuples(dn.detection* detections, int num_dets, str nms_type, float nms_threshold):
     if nms_threshold > 0 and num_dets > 0:
         if nms_type == "obj":
             dn.do_nms_obj(detections, num_dets, detections[0].classes, nms_threshold)
