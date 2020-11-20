@@ -68,6 +68,10 @@ cdef class Network:
     def shape(self):
         return dn.network_width(self._c_network), dn.network_height(self._c_network)
 
+    @property
+    def depth(self):
+        return dn.network_depth(self._c_network)
+
     def input_size(self):
         return dn.network_input_size(self._c_network)
 
@@ -126,4 +130,47 @@ cdef class Network:
                                           letterbox)
         rv = convert_detections_to_tuples(detections, num_dets, nms_type, nms_threshold)
         dn.free_detections(detections, num_dets)
-        return sorted(rv, key=lambda x: x[1], reverse=True)
+
+        return rv
+
+    def detect_batch(self,
+                     int batch_size,
+                     np.ndarray[dtype=np.float32_t, ndim=1, mode="c"] frames,
+                     frame_size=None,
+                     float threshold=.5,
+                     float hierarchical_threshold=.5,
+                     int relative=0,
+                     int letterbox=1,
+                     str nms_type="sort",
+                     float nms_threshold=.45
+                     ):
+        pred_width, pred_height = self.shape if frame_size is None else frame_size
+
+        cdef dn.image imr
+        # This looks awkward, but the batch predict *does not* use c, w, h.
+        imr.c = 0
+        imr.w = 0
+        imr.h = 0
+        imr.data = <float *> frames.data
+
+        cdef dn.det_num_pair* batch_detections
+        batch_detections = dn.network_predict_batch(
+            self._c_network,
+            imr,
+            batch_size,
+            pred_width,
+            pred_height,
+            threshold,
+            hierarchical_threshold,
+            <int*>0,
+            relative,
+            letterbox
+        )
+        rv = [
+            convert_detections_to_tuples(batch_detections[b].dets, batch_detections[b].num, nms_type, nms_threshold)
+            for b in range(batch_size)
+        ]
+        dn.free_batch_detections(batch_detections, batch_size)
+        return rv
+
+

@@ -5,13 +5,16 @@ cdef extern from "darknet.h":
     /*
      * darknet.h forgot to extern some useful network functions
      */
+     static int network_depth(network* net) {
+         return net->c;
+     }
      static int network_input_size(network* net) {
-        return net->layers[0].inputs;
+         return net->layers[0].inputs;
      }
      static int network_output_size(network* net) {
-        int i;
-        for(i = net->n-1; i > 0; --i) if(net->layers[i].type != COST) break;
-        return net->layers[i].outputs;
+         int i;
+         for(i = net->n-1; i > 0; --i) if(net->layers[i].type != COST) break;
+         return net->layers[i].outputs;
      }
     """
 
@@ -71,6 +74,7 @@ cdef extern from "darknet.h":
 
     int network_width(network *self);
     int network_height(network *self);
+    int network_depth(network *self);
     int network_input_size(network* self);
     int network_output_size(network* self);
     float* network_predict(network, float* input)
