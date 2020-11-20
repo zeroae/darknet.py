@@ -23,7 +23,7 @@ dependencies:
   - click-plugins
   - darknet
   - entrypoints
-  - fsspec
+  - fsspec <=0.7.5
   - numpy
   - pillow
 
