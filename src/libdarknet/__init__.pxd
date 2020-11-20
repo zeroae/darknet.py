@@ -8,6 +8,9 @@ cdef extern from "darknet.h":
      static int network_depth(network* net) {
          return net->c;
      }
+     static int network_batch_size(network* net) {
+         return net->batch;
+     }
      static int network_input_size(network* net) {
          return net->layers[0].inputs;
      }
@@ -72,6 +75,7 @@ cdef extern from "darknet.h":
     network* load_network_custom(char* cfg_filename, char* weights_filename, int clear, int batch_size)
     void free_network(network self)
 
+    int network_batch_size(network *self);
     int network_width(network *self);
     int network_height(network *self);
     int network_depth(network *self);

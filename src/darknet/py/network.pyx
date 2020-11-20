@@ -65,6 +65,10 @@ cdef class Network:
             free(self._c_network)
 
     @property
+    def batch_size(self):
+        return dn.network_batch_size(self._c_network)
+
+    @property
     def shape(self):
         return dn.network_width(self._c_network), dn.network_height(self._c_network)
 
