@@ -60,6 +60,7 @@ def image_to_3darray(image, target_shape):
     if isinstance(image, str):
         with fsspec.open(image, mode="rb") as f:
             image = Image.open(f)
+            image.load()
 
     if isinstance(image, Image.Image):
         orig_size = image.size
