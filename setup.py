@@ -14,7 +14,7 @@ requirements = [
     "click>=7.0",
     "click-plugins",
     "entrypoints",
-    "fsspec",
+    "fsspec <=0.7.5",
     "numpy",
     "pillow",
     # fmt: on
