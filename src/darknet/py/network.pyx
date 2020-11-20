@@ -46,15 +46,15 @@ cdef class Network:
     cdef dn.network* _c_network
 
     @staticmethod
-    def open(config_url, weights_url):
+    def open(config_url, weights_url, batch_size=1):
         with fsspec_cache_open(config_url, mode="rt") as config:
             with fsspec_cache_open(weights_url, mode="rb") as weights:
-                return Network(config.name, weights.name)
+                return Network(config.name, weights.name, batch_size)
 
-    def __cinit__(self, config_file, weights_file, clear = True, batch_size = 1):
+    def __cinit__(self, str config_file, str weights_file, int batch_size, bint clear=True):
         self._c_network = dn.load_network_custom(config_file.encode(),
                                                  weights_file.encode(),
-                                                 1 if clear else 0,
+                                                 clear,
                                                  batch_size)
         if self._c_network is NULL:
             raise RuntimeError("Failed to create the DarkNet Network...")
@@ -146,7 +146,6 @@ cdef class Network:
         return rv
 
     def detect_batch(self,
-                     int batch_size,
                      np.ndarray[dtype=np.float32_t, ndim=1, mode="c"] frames,
                      frame_size=None,
                      float threshold=.5,
@@ -165,11 +164,20 @@ cdef class Network:
         imr.h = 0
         imr.data = <float *> frames.data
 
+        if frames.size % self.input_size() != 0:
+            raise TypeError("The frames array is not divisible by network input size. "
+                            f"({frames.size} % {self.input_size()} != 0)")
+
+        num_frames = frames.size // self.input_size()
+        if num_frames > self.batch_size:
+            raise TypeError("There are more frames than the configured batch size. "
+                            f"({num_frames} > {self.batch_size})")
+
         cdef dn.det_num_pair* batch_detections
         batch_detections = dn.network_predict_batch(
             self._c_network,
             imr,
-            batch_size,
+            num_frames,
             pred_width,
             pred_height,
             threshold,
@@ -180,9 +188,9 @@ cdef class Network:
         )
         rv = [
             convert_detections_to_tuples(batch_detections[b].dets, batch_detections[b].num, nms_type, nms_threshold)
-            for b in range(batch_size)
+            for b in range(num_frames)
         ]
-        dn.free_batch_detections(batch_detections, batch_size)
+        dn.free_batch_detections(batch_detections, num_frames)
         return rv
 
 
