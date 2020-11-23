@@ -100,7 +100,8 @@ def image_draw_detections(img: Image.Image, detections) -> Image.Image:
         text = f"{cat}@{prob:.2%}"
         bounds = xywh_to_bounds(*xywh)
         t_w, t_h = draw.textsize(text)
-        draw.rectangle(xywh_to_bounds(*xywh), outline=colors[i % 5], width=4)
+        bounds = (max(bounds[0], 0), max(bounds[1], 0) + t_h, min(bounds[2], img.width), min(bounds[3], img.height))
+        draw.rectangle(bounds, outline=colors[i % 5], width=4)
         draw.rectangle(
             (bounds[0], bounds[1] - t_h, bounds[0] + t_w + 4, bounds[1]), fill=colors[i % 5]
         )

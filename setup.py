@@ -11,7 +11,7 @@ with open("README.rst") as readme_file:
 # The requirements section should be kept in sync with the environment.yml file
 requirements = [
     # fmt: off
-    "av >=8.0.2,<9"
+    "av >=8.0.2,<9",
     "click>=7.0",
     "click-plugins",
     "entrypoints",
