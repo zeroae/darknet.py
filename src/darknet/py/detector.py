@@ -57,7 +57,7 @@ class StreamDetector(DetectorBase):
                     for frame in frames)
         r_frames = (frame.to_ndarray().transpose((2, 0, 1)) for frame in r_frames)
 
-        # Group the frames based on the network batch size
+        # Group the frames based on the network batch size, filter out "None"s
         g_frames = grouper(self.network.batch_size, r_frames, None)
         g_frames = (tuple(filter(lambda x: type(None) != type(x), batch)) for batch in g_frames)
 
