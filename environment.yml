@@ -27,9 +27,16 @@ dependencies:
   - fsspec <=0.7.5
   - numpy
   - pillow
+  - tqdm
 
   # Zoo Optional Requirements
   - intake
+  - darknet-yolov4
+
+  # YouTube Optional Requirements
+  - pafy
+  - youtube-dl
+  - webvtt-py
 
   # Test Requirements (setup.py:test_requirements)
   - pytest >=3
