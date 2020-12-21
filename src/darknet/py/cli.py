@@ -14,6 +14,3 @@ def py(args=None):
     # fmt: on
     return 0
 
-
-if __name__ == "__main__":
-    sys.exit(py)  # pragma: no cover

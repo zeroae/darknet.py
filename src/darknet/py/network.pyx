@@ -157,13 +157,6 @@ cdef class Network:
                      ):
         pred_width, pred_height = self.shape if frame_size is None else frame_size
 
-        cdef dn.image imr
-        # This looks awkward, but the batch predict *does not* use c, w, h.
-        imr.c = 0
-        imr.w = 0
-        imr.h = 0
-        imr.data = <float *> frames.data
-
         if frames.size % self.input_size() != 0:
             raise TypeError("The frames array is not divisible by network input size. "
                             f"({frames.size} % {self.input_size()} != 0)")
@@ -172,6 +165,18 @@ cdef class Network:
         if num_frames > self.batch_size:
             raise TypeError("There are more frames than the configured batch size. "
                             f"({num_frames} > {self.batch_size})")
+
+        if num_frames < self.batch_size:
+            frames = np.concatenate([frames, np.zeros(self.input_size()*(self.batch_size-num_frames),
+                                                      dtype=frames.dtype)])
+            frames = np.ascontiguousarray(frames.flat)
+
+        # This looks awkward, but the batch predict *does not* use c, w, h.
+        cdef dn.image imr
+        imr.c = 0
+        imr.w = 0
+        imr.h = 0
+        imr.data = <float *> frames.data
 
         cdef dn.det_num_pair* batch_detections
         batch_detections = dn.network_predict_batch(
