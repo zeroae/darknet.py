@@ -1,4 +1,3 @@
-
 name: darknet.py-dev
 channels:
   - zeroae
@@ -9,6 +8,8 @@ dependencies:
   - pip
   - pip:
     - -e .
+    - multi-model-server
+    - sagemaker-inference
 
   # Setup Requirements (setup.py:setup_requirements)
   - compilers
@@ -21,7 +22,7 @@ dependencies:
   # Install Requirements (setup.py:requirements)
   - click >=7.0
   - click-plugins
-  - darknet
+  - darknet-cpu
   - entrypoints
   - fsspec <=0.7.5
   - numpy
@@ -29,6 +30,12 @@ dependencies:
 
   # Zoo Optional Requirements
   - intake
+
+  # MMS Requirements
+  - enum-compat
+  - future
+  - retrying
+  - scipy
 
   # Test Requirements (setup.py:test_requirements)
   - pytest >=3
