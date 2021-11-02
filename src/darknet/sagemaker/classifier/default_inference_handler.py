@@ -3,7 +3,7 @@ import PIL.Image as Image
 from typing import Tuple, List
 from sagemaker_inference import content_types, decoder, encoder, errors
 
-from .. import DefaultDarknetInferenceHandler, image_to_3darray
+from .. import DefaultDarknetInferenceHandler, image_to_3darray, Network
 
 
 class DefaultDarknetClassifierInferenceHandler(DefaultDarknetInferenceHandler):
