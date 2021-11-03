@@ -11,7 +11,7 @@ from sagemaker_inference.encoder import encode
 from sagemaker_inference.decoder import decode
 from sagemaker_inference.default_inference_handler import DefaultInferenceHandler
 
-from ..py import Network
+from darknet.py.network import Network
 
 
 class DefaultDarknetInferenceHandler(DefaultInferenceHandler, ABC):
