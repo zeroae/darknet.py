@@ -1,7 +1,5 @@
 from itertools import groupby
 
-import PIL.Image as Image
-
 from typing import Tuple, List
 from sagemaker_inference.errors import UnsupportedFormatError
 

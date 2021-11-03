@@ -2,7 +2,7 @@ from retrying import retry
 from subprocess import CalledProcessError
 from sagemaker_inference import model_server
 
-from .classifier import handler_service as classifier_service
+# TODO: from .classifier import handler_service as classifier_service
 from .detector import handler_service as detector_service
 
 

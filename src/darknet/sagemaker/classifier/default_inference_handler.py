@@ -1,5 +1,3 @@
-import PIL.Image as Image
-
 from typing import Tuple, List
 
 from sagemaker_inference.errors import UnsupportedFormatError
@@ -18,7 +16,7 @@ class DefaultDarknetClassifierInferenceHandler(DefaultDarknetInferenceHandler):
         """
         network, labels = model
         max_labels = data.get("MaxLabels", 5)
-        min_confidence = data.get("MinConfidence", 55)
+        # TODO: min_confidence = data.get("MinConfidence", 55)
 
         if "NDArray" in data:
             probabilities = network.predict(data["NDArray"])

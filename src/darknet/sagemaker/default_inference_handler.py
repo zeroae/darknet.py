@@ -1,12 +1,9 @@
 import io
-import json
 
-import base64
 import numpy as np
 import PIL.Image as Image
 
 from abc import ABC
-from base64 import b64decode
 from glob import glob
 from typing import Tuple, List, Union
 
