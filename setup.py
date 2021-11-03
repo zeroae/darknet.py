@@ -47,6 +47,14 @@ doc_requirements = [
     # fmt: on
 ]
 
+mms_requirements = [
+    # fmt: off
+    "future",
+    "multi-model-server",
+    "retrying",
+    "sagemaker-inference",
+    # fmt: on
+]
 zoo_requirements = [
     # fmt: off
     "intake",
@@ -130,7 +138,7 @@ setup_kwargs = dict(
     long_description_content_type="text/x-rst",
     include_package_data=True,
     keywords="py darknet",
-    name="darknet-py",
+    name="darknet.py",
     package_dir={"": "src"},
     packages=find_namespace_packages(where="./src"),
     setup_requires=setup_requirements,
@@ -141,6 +149,7 @@ setup_kwargs = dict(
         "test": test_requirements,
         "doc": doc_requirements,
         "zoo": zoo_requirements,
+        "mms": mms_requirements,
         # fmt: on
     },
     url="https://github.com/zeroae/darknet.py",

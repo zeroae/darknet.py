@@ -93,10 +93,10 @@ wheels: dist  ## downloads wheel dependencies
 	ls -l wheels
 
 dist-conda:  ## builds conda-package
-	conda build --no-anaconda-upload --output-folder conda-bld \
+	conda mambabuild --no-anaconda-upload --output-folder conda-bld \
 	  -c zeroae \
 	  -c conda-forge \
-	  -c anaconda .
+	  .
 
 install: clean ## install the package to the active Python's site-packages
 	python setup.py install
