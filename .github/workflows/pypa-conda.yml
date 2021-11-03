@@ -215,9 +215,12 @@ jobs:
         with:
           activate-environment: ''
           auto-activate-base: true
+          miniforge-variant: Mambaforge
+          use-mamba: true
           conda-build-version: 3.21.4
           condarc-file: .github/condarc.yml
-      - run: conda install setuptools_scm conda-verify
+      - run: |
+          mamba install setuptools_scm conda-verify boa
       - uses: actions/cache@v1
         id: conda-pkgs-cache
         with:
@@ -228,7 +231,7 @@ jobs:
       - name: Run conda build
         run: |
           mkdir conda-bld
-          conda build --output-folder conda-bld .
+          conda mambabuild --output-folder conda-bld .
         env:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
       - name: Create conda-bld/manifest
