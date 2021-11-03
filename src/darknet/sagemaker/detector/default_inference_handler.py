@@ -3,7 +3,7 @@ from itertools import groupby
 import PIL.Image as Image
 
 from typing import Tuple, List
-from sagemaker_inference import errors
+from sagemaker_inference.errors import UnsupportedFormatError
 
 from .. import DefaultDarknetInferenceHandler, Network, image_to_3darray
 
@@ -17,15 +17,18 @@ class DefaultDarknetDetectorInferenceHandler(DefaultDarknetInferenceHandler):
 
         Returns: detected labels
         """
+        if "Image" not in data:
+            raise UnsupportedFormatError("Detector model expects an Image.")
+
         network, labels = model
-        max_labels = None
-        min_confidence = 55
 
-        if not isinstance(data, Image.Image):
-            raise TypeError("Input data is not an Image.")
+        max_labels = data.get("MaxLabels", None)
+        min_confidence = data.get("MinConfidence", 55)
 
-        image, frame_size = image_to_3darray(data, network.shape)
+        image = data["Image"]
+        image, frame_size = image_to_3darray(image, network.shape)
         _ = network.predict_image(image)
+
         detections = network.detect(
             frame_size=frame_size,
             threshold=min_confidence/100.0,
