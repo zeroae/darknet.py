@@ -211,7 +211,7 @@ jobs:
           tar -xvf *.tar.gz --strip 1
           rm *.tar.gz
 
-      - uses: goanpeca/setup-miniconda@v1
+      - uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: ''
           auto-activate-base: true
@@ -338,7 +338,7 @@ jobs:
         with:
           path: /usr/share/miniconda/pkgs
           key: ${{ runner.os }}-conda-ac1.7.2
-      - uses: goanpeca/setup-miniconda@v1
+      - uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: ''
           auto-activate-base: true
