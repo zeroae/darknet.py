@@ -10,16 +10,13 @@ def _retry_if_error(exception):
     return isinstance(exception, CalledProcessError or OSError)
 
 
-@retry(stop_max_delay=1000 * 50,
-       retry_on_exception=_retry_if_error)
+@retry(stop_max_delay=1000 * 50, retry_on_exception=_retry_if_error)
 def _start_mms():
     # by default the number of workers per model is 1, but we can configure it through the
     # environment variable below if desired.
     # os.environ['SAGEMAKER_MODEL_SERVER_WORKERS'] = '2'
     # TODO: Start Classifier *or* Detector Service
-    model_server.start_model_server(
-        handler_service=detector_service.__name__
-    )
+    model_server.start_model_server(handler_service=detector_service.__name__)
 
 
 def main():

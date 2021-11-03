@@ -28,8 +28,11 @@ class DefaultDarknetClassifierInferenceHandler(DefaultDarknetInferenceHandler):
         else:
             raise UnsupportedFormatError("Expected an NDArray or an Image")
 
-        rv = [{
-            "Name": label,
-            "Confidence": prob*100,
-        } for label, prob in sorted(zip(labels, probabilities), key=lambda x: x[1], reverse=True)]
+        rv = [
+            {
+                "Name": label,
+                "Confidence": prob * 100,
+            }
+            for label, prob in sorted(zip(labels, probabilities), key=lambda x: x[1], reverse=True)
+        ]
         return {"Labels": rv[0:max_labels] if max_labels else rv}

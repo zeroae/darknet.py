@@ -31,33 +31,26 @@ class DefaultDarknetDetectorInferenceHandler(DefaultDarknetInferenceHandler):
 
         detections = network.detect(
             frame_size=frame_size,
-            threshold=min_confidence/100.0,
-            hierarchical_threshold=min_confidence/100,
+            threshold=min_confidence / 100.0,
+            hierarchical_threshold=min_confidence / 100,
         )
         detections = sorted(detections, key=lambda x: x[0])
 
         def bbox_to_sm_map(x_0, y_0, w, h):
-            return {
-                "Width": w,
-                "Height": h,
-                "Left": x_0 - w/2,
-                "Top": y_0 + h/2
-            }
+            return {"Width": w, "Height": h, "Left": x_0 - w / 2, "Top": y_0 + h / 2}
 
         rv = []
         for label_idx, instances in groupby(detections, key=lambda x: x[0]):
-            instances = [{
-                    "Confidence": prob*100,
-                    "BoundingBox": bbox_to_sm_map(*bbox)
-                } for _, prob, bbox in sorted(instances, key=lambda x: x[1], reverse=True)
+            instances = [
+                {"Confidence": prob * 100, "BoundingBox": bbox_to_sm_map(*bbox)}
+                for _, prob, bbox in sorted(instances, key=lambda x: x[1], reverse=True)
             ]
             detection = {
                 "Name": labels[label_idx],
                 "Confidence": instances[0]["Confidence"],
                 "Instances": instances,
-                "Parents": []
+                "Parents": [],
             }
             detection["Confidence"] = detection["Instances"][0]["Confidence"]
             rv.append(detection)
         return {"Labels": rv[0:max_labels] if max_labels else rv}
-

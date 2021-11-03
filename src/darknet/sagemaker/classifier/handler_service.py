@@ -12,8 +12,11 @@ class HandlerService(DefaultHandlerService):
         - The ``initialize`` method is invoked at model server start up.
     Based on: https://github.com/awslabs/mxnet-model-server/blob/master/docs/custom_service.md
     """
+
     def __init__(self):
         self._initialized = False
 
-        transformer = Transformer(default_inference_handler=DefaultDarknetClassifierInferenceHandler())
+        transformer = Transformer(
+            default_inference_handler=DefaultDarknetClassifierInferenceHandler()
+        )
         super(HandlerService, self).__init__(transformer=transformer)
