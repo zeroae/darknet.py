@@ -1,7 +1,9 @@
+from itertools import groupby
+
 import PIL.Image as Image
 
 from typing import Tuple, List
-from sagemaker_inference import encoder, errors
+from sagemaker_inference import errors
 
 from .. import DefaultDarknetInferenceHandler, Network, image_to_3darray
 
@@ -16,27 +18,43 @@ class DefaultDarknetDetectorInferenceHandler(DefaultDarknetInferenceHandler):
         Returns: detected labels
         """
         network, labels = model
+        max_labels = None
+        min_confidence = 55
+
         if not isinstance(data, Image.Image):
             raise TypeError("Input data is not an Image.")
 
         image, frame_size = image_to_3darray(data, network.shape)
         _ = network.predict_image(image)
-        detections = network.detect(frame_size=frame_size)
-
-        return (
-            detections
-            if labels is None
-            else [(labels[label_idx], prob, bbox) for label_idx, prob, bbox in detections]
+        detections = network.detect(
+            frame_size=frame_size,
+            threshold=min_confidence/100.0,
+            hierarchical_threshold=min_confidence/100,
         )
+        detections = sorted(detections, key=lambda x: x[0])
 
-    def default_output_fn(self, prediction, accept):
-        """A default output_fn for PyTorch. Serializes predictions from predict_fn to JSON, CSV or NPY format.
+        def bbox_to_sm_map(x_0, y_0, w, h):
+            return {
+                "Width": w,
+                "Height": h,
+                "Left": x_0 - w/2,
+                "Top": y_0 + h/2
+            }
 
-        Args:
-            prediction: a prediction result from predict_fn
-            accept: type which the output data needs to be serialized
+        rv = []
+        for label_idx, instances in groupby(detections, key=lambda x: x[0]):
+            instances = [{
+                    "Confidence": prob*100,
+                    "BoundingBox": bbox_to_sm_map(*bbox)
+                } for _, prob, bbox in sorted(instances, key=lambda x: x[1], reverse=True)
+            ]
+            detection = {
+                "Name": labels[label_idx],
+                "Confidence": instances[0]["Confidence"],
+                "Instances": instances,
+                "Parents": []
+            }
+            detection["Confidence"] = detection["Instances"][0]["Confidence"]
+            rv.append(detection)
+        return {"Labels": rv[0:max_labels] if max_labels else rv}
 
-        Returns: output data serialized (Return Sagemaker format?)
-        """
-        prediction = sorted(prediction, key=lambda x: x[1], reverse=True)[0:5]
-        return encoder.encode(list(prediction), accept)

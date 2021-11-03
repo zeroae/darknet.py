@@ -6,6 +6,7 @@ from abc import ABC
 from glob import glob
 from typing import Tuple, List, Union
 
+from sagemaker_inference.encoder import encode
 from sagemaker_inference.decoder import decode
 from sagemaker_inference.default_inference_handler import DefaultInferenceHandler
 
@@ -41,3 +42,14 @@ class DefaultDarknetInferenceHandler(DefaultInferenceHandler, ABC):
             image = Image.open(io.BytesIO(input_data))
             return image
         return decode(input_data, content_type)
+
+    def default_output_fn(self, prediction, accept):
+        """A default output_fn for PyTorch. Serializes predictions from predict_fn to JSON, CSV or NPY format.
+
+        Args:
+            prediction: a prediction result from predict_fn
+            accept: type which the output data needs to be serialized
+
+        Returns: output data serialized (Return Sagemaker format?)
+        """
+        return encode(prediction, accept)
