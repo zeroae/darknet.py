@@ -4,7 +4,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python
+  - python <3.9
   - pip
   - pip:
     - -e .
@@ -20,6 +20,7 @@ dependencies:
   - wheel
 
   # Install Requirements (setup.py:requirements)
+  - av >=8.0.2,<9
   - click >=7.0
   - click-plugins
   - darknet-cpu
@@ -27,9 +28,16 @@ dependencies:
   - fsspec <=0.7.5
   - numpy
   - pillow
+  - tqdm
 
   # Zoo Optional Requirements
   - intake
+  - darknet-yolov4
+
+  # YouTube Optional Requirements
+  - pafy
+  - youtube-dl
+  - webvtt-py
 
   # MMS Requirements
   - enum-compat
