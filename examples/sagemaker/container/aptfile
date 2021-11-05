@@ -1,0 +1,8 @@
+#!/usr/bin/env aptfile
+
+# trigger and apt-get update
+update
+
+# install some packages
+# use JDK8 because SageMaker passes the -XX:-ContainerSupport option
+package "openjdk-8-jre-headless"

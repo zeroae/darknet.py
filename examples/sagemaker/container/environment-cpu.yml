@@ -1,0 +1,16 @@
+channels:
+  - zeroae
+  - conda-forge
+dependencies:
+  - darknet-cpu
+  - darknet.py 0.3.*
+  - enum-compat
+  - future
+  - psutil
+  - retrying
+  - scipy
+  - six
+  - pip
+  - pip:
+      - multi-model-server ==1.1.*
+      - sagemaker-inference ==1.5.*
