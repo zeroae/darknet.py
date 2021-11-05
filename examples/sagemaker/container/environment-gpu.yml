@@ -12,5 +12,5 @@ dependencies:
   - six
   - pip
   - pip:
-      - multi-model-server 1.1.*
-      - sagemaker-inference 1.5.*
+      - multi-model-server ==1.1.*
+      - sagemaker-inference ==1.5.*

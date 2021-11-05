@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.2-devel-ubuntu18.04 as mambaforge-cuda
+FROM nvidia/cuda:10.2-base-ubuntu18.04 as mambaforge-cuda
 
 ENV CONDA_DIR=/opt/conda
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
@@ -9,12 +9,16 @@ COPY --from=condaforge/mambaforge /opt/conda /opt/conda
 COPY --from=condaforge/mambaforge /usr/local/bin/tini /usr/local/bin/tini
 COPY --from=condaforge/mambaforge /etc/skel/.bashrc /etc/skel/.bashrc
 COPY --from=condaforge/mambaforge /root/.bashrc /root/.bashrc
-RUN mamba install pynvml
+RUN mamba install --yes pynvml
 
 RUN apt-get update && \
     apt-get install --no-install-recommends --yes wget bzip2 ca-certificates git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Cache cudatoolkit
+RUN mamba create -y -n test --download-only cudatoolkit && \
+    conda clean -ty
 
 
 FROM mambaforge-cuda
@@ -35,12 +39,10 @@ RUN chmod +x /usr/local/bin/aptfile
 COPY aptfile /home/model-server
 RUN aptfile
 
-# Darknet Library is *either* compiled for CPU or GPU, so we need to conda environments
-COPY environment-cpu.yml /home/model-server
-COPY environment-gpu.yml /home/model-server
+# Darknet Library is *either* compiled for CPU or GPU, so we need two conda environments
+COPY environment-*.yml /home/model-server
 RUN mamba env create -n cpu -f /home/model-server/environment-cpu.yml && \
     mamba env create -n gpu -f /home/model-server/environment-gpu.yml && \
-    conda clean --tipsy
+    conda clean -tipsy
 
 COPY entrypoint.sh /docker-entrypoint.sh
-CMD ["python", "-m", "darknet.sagemaker"]

@@ -4,7 +4,5 @@
 update
 
 # install some packages
-package "openjdk-11-jre-headless"
-
-# clean
-clean
+# use JDK8 because SageMaker passes the -XX:-ContainerSupport option
+package "openjdk-8-jre-headless"

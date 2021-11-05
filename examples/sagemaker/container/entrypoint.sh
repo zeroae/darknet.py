@@ -11,4 +11,5 @@ except:
   print("cpu")
 ')
 conda activate $conda_environment
-exec "$@"
+
+exec python -m darknet.sagemaker
