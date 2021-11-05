@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.2-devel-ubuntu18.04 as cuda-mambaforge
+FROM nvidia/cuda:10.2-devel-ubuntu18.04 as mambaforge-cuda
 
 ENV CONDA_DIR=/opt/conda
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
@@ -11,13 +11,13 @@ COPY --from=condaforge/mambaforge /etc/skel/.bashrc /etc/skel/.bashrc
 COPY --from=condaforge/mambaforge /root/.bashrc /root/.bashrc
 RUN mamba install pynvml
 
-#RUN apt-get update && \
-#    apt-get install --no-install-recommends --yes wget bzip2 ca-certificates git && \
-#    apt-get clean && \
-#    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install --no-install-recommends --yes wget bzip2 ca-certificates git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 
-FROM cuda-mambaforge
+FROM mambaforge-cuda
 
 LABEL com.amazonaws.sagemaker.capabilities.multi-models=true
 LABEL com.amazonaws.sagemaker.capabilities.accept-bind-to-port=true
@@ -43,3 +43,4 @@ RUN mamba env create -n cpu -f /home/model-server/environment-cpu.yml && \
     conda clean --tipsy
 
 COPY entrypoint.sh /docker-entrypoint.sh
+CMD ["python", "-m", "darknet.sagemaker"]
