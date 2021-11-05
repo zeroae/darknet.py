@@ -1,0 +1,10 @@
+#!/usr/bin/env aptfile
+
+# trigger and apt-get update
+update
+
+# install some packages
+package "openjdk-11-jre-headless"
+
+# clean
+clean
